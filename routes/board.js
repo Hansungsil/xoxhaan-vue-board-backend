@@ -15,7 +15,7 @@ router.post('/write', function (req, res, next) {
   var date = req.body.date;
   var author_id = req.body.author_id;
 
-  sql = 'INSERT INTO boards (name, title, content, date, author_id) VALUE (?, ?, ?, ?, ?)';
+  sql = 'INSERT INTO heroku_b5a2bf6f45ca25f.boards (name, title, content, date, author_id) VALUE (?, ?, ?, ?, ?)';
   mysqlDB.query(sql, [name, title, content, date, author_id], function (err, rows, fields) {
     if (!err) {
       res.json({ text: '글이 작성 되었습니다.'});
@@ -45,7 +45,7 @@ router.get('/lists', function (req, res, next) {
     getSearchListSql = ' '
   }
 
-  sql = 'SELECT * FROM boards' + getSearchListSql + 'ORDER BY date DESC LIMIT ' + pageNumCalculation + ', ' + listCount;
+  sql = 'SELECT * FROM heroku_b5a2bf6f45ca25f.boards' + getSearchListSql + 'ORDER BY date DESC LIMIT ' + pageNumCalculation + ', ' + listCount;
   mysqlDB.query(sql, function (err, rows, fields) {
     if (!err) {
       if (rows.length === 0) {
@@ -66,7 +66,7 @@ router.get('/list', function(req, res, next) {
 
   var listId = req.query.id;
 
-  sql = 'SELECT * FROM boards WHERE id = \'' + listId + '\'';
+  sql = 'SELECT * FROM heroku_b5a2bf6f45ca25f.boards WHERE id = \'' + listId + '\'';
   mysqlDB.query(sql, function (err, rows, fields) {
     if (!err) {
       res.send(rows);
@@ -82,7 +82,7 @@ router.delete('/delete', function (req, res, next) {
 
   var listId = req.query.id;
 
-  sql = 'DELETE FROM boards WHERE id = \'' + listId + '\'';
+  sql = 'DELETE FROM heroku_b5a2bf6f45ca25f.boards WHERE id = \'' + listId + '\'';
   mysqlDB.query(sql, function (err, rows, fields) {
     if (!err) {
       res.send('삭제 되었습니다.');
@@ -100,7 +100,7 @@ router.put('/update', function (req, res, next) {
   var title = req.body.title;
   var content = req.body.content;
 
-  sql = 'UPDATE boards SET title = \'' + title + '\', content = \'' + content +
+  sql = 'UPDATE heroku_b5a2bf6f45ca25f.boards SET title = \'' + title + '\', content = \'' + content +
         '\' WHERE id = \'' + listId + '\' LIMIT 2'
   mysqlDB.query(sql, function (err, rows, fields) {
     if (!err) {
@@ -117,7 +117,7 @@ router.put('/countUp', function (req, res, next) {
 
   var listId = req.body.id;
 
-  sql = 'UPDATE boards SET count = count + 1 WHERE id = \'' + listId + '\' LIMIT 1';
+  sql = 'UPDATE heroku_b5a2bf6f45ca25f.boards SET count = count + 1 WHERE id = \'' + listId + '\' LIMIT 1';
   mysqlDB.query(sql, function (err, rows, fields) {
     if (!err) {
       res.send('조회수 증가!!');
@@ -141,7 +141,7 @@ router.get('/listTotalCount', function (req, res, next) {
     getSearchCountSql = ''
   }
 
-  sql = 'SELECT count(*) as totalCount FROM boards' + getSearchCountSql
+  sql = 'SELECT count(*) as totalCount FROM heroku_b5a2bf6f45ca25f.boards' + getSearchCountSql
   mysqlDB.query(sql, function (err, rows, fields) {
     if (!err) {
       res.send(rows[0])

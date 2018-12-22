@@ -13,7 +13,7 @@ router.post('/signUp', function(req, res, next) {
   var userpw2 = req.body.userpw2;
   var username = req.body.username;
 
-  var sql = 'INSERT INTO users (uid, upw, upwch, name) VALUES (?, ?, ?, ?)';
+  var sql = 'INSERT INTO heroku_b5a2bf6f45ca25f.users (uid, upw, upwch, name) VALUES (?, ?, ?, ?)';
   mysqlDB.query(sql, [ userid, userpw1, userpw2, username ], function(err, rows, fields){
     if (!err) {
       res.send('가입이 성공적으로 되었습니다.');
@@ -32,7 +32,7 @@ router.get('/:userCheck', function(req, res, next) {
   var userText = req.query.userText;
   console.log(userColumn, userText);
 
-  var sql = 'SELECT * FROM users WHERE ' + userColumn + ' = \'' + userText + '\'';
+  var sql = 'SELECT * FROM heroku_b5a2bf6f45ca25f.users WHERE ' + userColumn + ' = \'' + userText + '\'';
   mysqlDB.query(sql, function(err, rows, fields){
     if(!err) {
       console.log(rows);
@@ -56,11 +56,11 @@ router.post('/loginCheck', function(req, res, next){
   var userid = req.body.userid;
   var userpw = req.body.userpw;
 
-  sql = 'SELECT * FROM users WHERE uid = \'' + userid + '\'';
+  sql = 'SELECT * FROM heroku_b5a2bf6f45ca25f.users WHERE uid = \'' + userid + '\'';
   mysqlDB.query(sql, function (err, rows, fields){
     console.log(rows);
     if(rows.length === 1) {
-      sql = 'SELECT * FROM users WHERE uid = \'' + userid + '\' AND upw = \'' + userpw+ '\'';
+      sql = 'SELECT * FROM heroku_b5a2bf6f45ca25f.users WHERE uid = \'' + userid + '\' AND upw = \'' + userpw+ '\'';
       mysqlDB.query(sql, function (err, rows, fields){
         if(rows.length === 1) {
           res.json({ text:'로그인 성공', rows: rows[0]});
@@ -73,10 +73,5 @@ router.post('/loginCheck', function(req, res, next){
     }
   });
 });
-
-// GET 로그아웃
-// router.get('/logout', function(req, res, next){
-//   delete localStorage.token
-// })
 
 module.exports = router;
