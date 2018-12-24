@@ -59,4 +59,8 @@ app.use(function(err, req, res, next) {
 
 app.use(require('connect-history-api-fallback')());
 
+setInterval(function () {
+  mysqlDB.query('SELECT 1');
+}, 5000);
+
 module.exports = app;
