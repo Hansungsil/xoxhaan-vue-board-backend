@@ -11,7 +11,6 @@ var port = 3306;
 mysqlDB.connect();
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/login');
 var boardRouter = require('./routes/board');
 
@@ -27,7 +26,6 @@ app.use(bodyParser.json());
 
 // Router
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/board', boardRouter);
 
