@@ -37,10 +37,10 @@ router.get('/:userCheck', function(req, res, next) {
     if(!err) {
       console.log(rows);
       console.log(rows.length);
-      if(rows.length >=1) {
-        res.json({text:'사용할 수 없습니다.', column: userColumn});
+      if(rows.length >= 1) {
+        res.json({text:'사용할 수 없습니다.', resultLength: rows.legnth, column: userColumn});
       } else {
-        res.json({text:'사용할 수 있습니다.', column: userColumn});
+        res.json({text:'사용할 수 있습니다.', resultLength: rows.legnth, column: userColumn});
       }
     } else {
       console.log(err);
